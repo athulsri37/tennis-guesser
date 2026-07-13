@@ -6,6 +6,13 @@ attributes (playing hand, backhand type, country, Grand Slam titles,
 career-high ranking, turned-pro year, career titles) with directional
 arrows on numeric clues.
 
+## Status
+
+The .NET 10 upgrade and the AI trivia feature (short blurb about the
+mystery player shown on game over) are both implemented and merged.
+`dotnet build` (backend) and `npm run build` (frontend) have been verified
+to pass cleanly.
+
 ## Features
 
 - **Daily puzzle** — one shared mystery player per day, no repeats for 14 days
@@ -23,7 +30,7 @@ arrows on numeric clues.
 | Layer      | Technology                                  |
 |------------|-----------------------------------------------|
 | Frontend   | React 18, TypeScript, Vite, Tailwind CSS      |
-| Backend    | C#, ASP.NET Core 8 Web API, Entity Framework Core |
+| Backend    | C#, ASP.NET Core 10 Web API, Entity Framework Core |
 | Database   | PostgreSQL                                    |
 | Deployment | Docker & Docker Compose                       |
 
@@ -44,22 +51,13 @@ tennis-guessr/
     └── types/
 ```
 
-## ⚠️ First-time setup: this project has NOT been compiled yet
-
-The backend was written and structured carefully, but **could not be built
-or run** in the environment it was generated in (no .NET SDK / NuGet access
-there). Before anything else, run:
-
-```bash
-cd backend/TennisGuessr.Api
-dotnet build
-```
-
-Fix any compile errors that surface (there may be minor ones — this is
-normal for hand-written code that's never been through a compiler). Paste
-any errors back to Claude for a fast fix if you get stuck.
-
 ## Getting Started
+
+### Prerequisites
+
+- [.NET 10 SDK](https://dotnet.microsoft.com/download)
+- Node.js 18+
+- PostgreSQL (via Docker or a local install)
 
 ### 1. Start PostgreSQL
 
@@ -83,14 +81,26 @@ The app also calls `db.Database.Migrate()` on startup, so once migrations
 exist, the schema stays in sync automatically. The 20-player sample dataset
 seeds itself automatically on first run (see `Data/DataSeeder.cs`).
 
-### 3. Run the backend
+### 3. (Optional) Enable AI trivia blurbs
+
+On game over, the app can show a short AI-generated trivia blurb about the
+mystery player. This is optional — without a key configured, the game works
+exactly the same, just without the blurb. Set your Anthropic API key via
+`dotnet user-secrets` rather than committing it to `appsettings.json`:
+```bash
+cd backend/TennisGuessr.Api
+dotnet user-secrets init
+dotnet user-secrets set "Anthropic:ApiKey" "sk-ant-..."
+```
+
+### 4. Run the backend
 ```bash
 dotnet run
 ```
-API will be available at `http://localhost:5080`, with Swagger docs at
-`http://localhost:5080/swagger`.
+API will be available at `http://localhost:5080`, with interactive OpenAPI
+docs (via Scalar) at `http://localhost:5080/scalar/v1`.
 
-### 4. Run the frontend
+### 5. Run the frontend
 ```bash
 cd frontend
 npm install

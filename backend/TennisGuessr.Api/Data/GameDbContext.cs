@@ -12,6 +12,7 @@ public class GameDbContext : DbContext
     public DbSet<AttributeDefinition> AttributeDefinitions => Set<AttributeDefinition>();
     public DbSet<PlayerAttributeValue> PlayerAttributeValues => Set<PlayerAttributeValue>();
     public DbSet<DailyPuzzle> DailyPuzzles => Set<DailyPuzzle>();
+    public DbSet<AppSetting> AppSettings => Set<AppSetting>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -45,6 +46,10 @@ public class GameDbContext : DbContext
 
         modelBuilder.Entity<DailyPuzzle>()
             .HasIndex(d => new { d.SportId, d.PuzzleDate })
+            .IsUnique();
+
+        modelBuilder.Entity<AppSetting>()
+            .HasIndex(s => s.Key)
             .IsUnique();
     }
 }

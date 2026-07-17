@@ -3,6 +3,7 @@ import { fetchPlayerPool, startPracticeGame, submitGuess } from "../api/client";
 import { PlayerSummary, GuessResponse, Difficulty } from "../types";
 import PlayerSearch from "../components/PlayerSearch";
 import ClueGrid from "../components/ClueGrid";
+import ClueLegend from "../components/ClueLegend";
 import ShareResult from "../components/ShareResult";
 
 const MAX_GUESSES = 8;
@@ -18,6 +19,7 @@ export default function GameBoard({ mode, onBackToHome }: Props) {
   const [guesses, setGuesses] = useState<GuessResponse[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showLegend, setShowLegend] = useState(false);
 
   useEffect(() => {
     fetchPlayerPool().then(setPlayers).catch(() => setError("Couldn't load player list."));
@@ -92,9 +94,27 @@ export default function GameBoard({ mode, onBackToHome }: Props) {
 
         {error && <p className="text-[var(--accent-alt)] mt-2 text-sm">{error}</p>}
 
-        <p className="text-[var(--text-muted)] text-xs mt-2">
-          {guesses.length} / {MAX_GUESSES} guesses
-        </p>
+        <div className="flex items-center gap-2 mt-2">
+          <p className="text-[var(--text-muted)] text-xs">
+            {guesses.length} / {MAX_GUESSES} guesses
+          </p>
+          <button
+            onClick={() => setShowLegend((v) => !v)}
+            aria-label="What do the clues mean?"
+            className="btn-card flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold leading-none"
+          >
+            ?
+          </button>
+        </div>
+
+        {showLegend && (
+          <div className="card rounded-md p-5 mt-3 w-full max-w-md text-left">
+            <h2 className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wide mb-2">
+              What do the clues mean?
+            </h2>
+            <ClueLegend />
+          </div>
+        )}
 
         <ClueGrid guesses={guesses} />
 

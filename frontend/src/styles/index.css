@@ -9,3 +9,33 @@ body {
 .font-heading {
   font-family: var(--font-heading, 'Bebas Neue'), sans-serif;
 }
+
+/* Static content card: same depth treatment as buttons, no interactive states. */
+.card {
+  background: var(--bg-card);
+  border: var(--card-border-width, 1px) solid var(--border);
+  box-shadow: var(--card-shadow, none);
+}
+
+/* Default button treatment app-wide: card surface, not a solid accent fill.
+   Accent color is reserved for hover/focus so it still reads as "the highlight
+   color" rather than the default state of every button. */
+.btn-card {
+  background: var(--bg-card);
+  border: var(--card-border-width, 1px) solid var(--border-strong);
+  box-shadow: var(--card-shadow, none);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-card:hover,
+.btn-card:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-card:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

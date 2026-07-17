@@ -39,7 +39,7 @@ export default function ShareResult({ guesses, won, mode }: Props) {
   return (
     <button
       onClick={handleShare}
-      className="mt-4 px-5 py-2.5 rounded-md bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-[var(--on-accent)] font-semibold text-sm transition-colors"
+      className="btn-card mt-4 px-5 py-2.5 rounded-md font-semibold text-sm"
     >
       {copied ? "Copied to clipboard!" : "Share result"}
     </button>

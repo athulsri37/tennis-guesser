@@ -19,9 +19,8 @@ export default function HomeScreen({ onSelectSport }: Props) {
         <span className="text-[var(--accent-alt)]">Athlete</span>
       </h1>
       <p className="text-[var(--text-secondary)] text-sm mb-10 max-w-md text-center">
-        Somewhere in the roster is a mystery athlete. Guess players and use the
-        color-coded stat clues you get back — country, style, career numbers —
-        to close in on who it is before you run out of tries.
+        Guess the mystery athlete using clues. New challenge daily, plus
+        practice modes.
       </p>
 
       <div className="flex flex-col gap-3 w-full max-w-xs">
@@ -29,7 +28,7 @@ export default function HomeScreen({ onSelectSport }: Props) {
           <button
             key={sport.slug}
             onClick={() => onSelectSport(sport)}
-            className="px-5 py-3 rounded-md bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-[var(--on-accent)] font-semibold text-lg transition-colors"
+            className="btn-card px-5 py-3 rounded-md font-semibold text-lg"
           >
             {sport.name}
           </button>

@@ -10,6 +10,8 @@
   --accent-alt-hover: #9c5225;
   --on-accent: #2B2118;
   --border: rgba(43, 33, 24, 0.25);
+  --border-strong: #2B2118;
+  --miss-bg: rgba(181, 96, 43, 0.18);
   --font-heading: 'Archivo Black';
   --font-body: 'Inter';
 }
@@ -26,6 +28,8 @@
   --accent-alt-hover: #e6415f;
   --on-accent: #0a0e14;
   --border: #1f2833;
+  --border-strong: #39FF88;
+  --miss-bg: rgba(255, 84, 112, 0.18);
   --font-heading: 'Orbitron';
   --font-body: 'Inter';
 }

@@ -37,15 +37,15 @@ export default function PlayerSearch({ players, guessedIds, disabled, onGuess }:
           setOpen(true);
         }}
         placeholder={disabled ? "Game over" : "Type a player name..."}
-        className="w-full rounded-md border-2 border-court-green/30 bg-white px-4 py-2.5 text-sm font-medium text-court-green placeholder:text-court-green/40 focus:outline-none focus:border-ace-600 disabled:bg-slate-100 disabled:text-slate-400"
+        className="w-full rounded-md border-[3px] border-[var(--border-strong)] bg-[var(--bg-card)] px-4 py-2.5 text-sm font-medium text-[var(--text-primary)] placeholder:text-[var(--text-muted)] shadow-[4px_4px_0px_0px_var(--border-strong)] focus:outline-none focus:border-[var(--accent)] disabled:opacity-50"
       />
       {open && matches.length > 0 && (
-        <ul className="absolute z-10 mt-1 w-full rounded-md border border-court-green/20 bg-white shadow-lg overflow-hidden">
+        <ul className="absolute z-10 mt-1 w-full rounded-md border-[3px] border-[var(--border-strong)] bg-[var(--bg-card)] shadow-[4px_4px_0px_0px_var(--border-strong)] overflow-hidden">
           {matches.map((p) => (
             <li key={p.id}>
               <button
                 onClick={() => pick(p)}
-                className="w-full text-left px-4 py-2 text-sm hover:bg-ace-500/20 text-court-green"
+                className="w-full text-left px-4 py-2 text-sm hover:bg-[var(--bg-primary)] text-[var(--text-primary)]"
               >
                 {p.name}
               </button>

@@ -9,6 +9,11 @@ export async function fetchPlayerPool(): Promise<PlayerSummary[]> {
   return res.data;
 }
 
+export async function fetchActiveTheme(): Promise<string> {
+  const res = await client.get(`/settings/theme`);
+  return res.data.theme as string;
+}
+
 export async function startPracticeGame(difficulty: Exclude<Difficulty, "daily">) {
   const res = await client.post(`/sports/${SPORT}/game/start`, null, {
     params: { difficulty },

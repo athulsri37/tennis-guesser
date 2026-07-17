@@ -74,9 +74,9 @@ export default function GameBoard({ mode, onBackToHome }: Props) {
   );
 
   return (
-    <div className="min-h-screen bg-court-green flex flex-col items-center px-4 py-10">
-      <h1 className="font-display text-5xl tracking-wide text-ace-500 mb-1">ID the Tennis Player</h1>
-      <p className="text-court-chalk/70 text-sm mb-6">Guess the mystery ATP player in 8 tries</p>
+    <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col items-center px-4 py-10">
+      <h1 className="font-heading text-5xl tracking-wide text-[var(--accent)] mb-1">ID the Tennis Player</h1>
+      <p className="text-[var(--text-secondary)] text-sm mb-6">Guess the mystery ATP player in 8 tries</p>
 
       <div className="mt-8 flex flex-col items-center w-full">
         <PlayerSearch
@@ -86,9 +86,9 @@ export default function GameBoard({ mode, onBackToHome }: Props) {
           onGuess={handleGuess}
         />
 
-        {error && <p className="text-court-clay mt-2 text-sm">{error}</p>}
+        {error && <p className="text-[var(--accent-alt)] mt-2 text-sm">{error}</p>}
 
-        <p className="text-court-chalk/60 text-xs mt-2">
+        <p className="text-[var(--text-muted)] text-xs mt-2">
           {guesses.length} / {MAX_GUESSES} guesses
         </p>
 
@@ -96,11 +96,11 @@ export default function GameBoard({ mode, onBackToHome }: Props) {
 
         {gameOver && (
           <div className="mt-6 text-center">
-            <p className="text-court-chalk text-lg font-semibold">
+            <p className="text-[var(--text-primary)] text-lg font-semibold">
               {won ? "🎾 Nice read!" : `The player was ${guesses[guesses.length - 1].answerName}`}
             </p>
             {guesses[guesses.length - 1].triviaBlurb && (
-              <p className="text-court-chalk/60 text-xs italic mt-2 max-w-sm mx-auto">
+              <p className="text-[var(--text-muted)] text-xs italic mt-2 max-w-sm mx-auto">
                 {guesses[guesses.length - 1].triviaBlurb}
               </p>
             )}
@@ -109,14 +109,14 @@ export default function GameBoard({ mode, onBackToHome }: Props) {
               {mode !== "daily" && (
                 <button
                   onClick={() => startNewGame()}
-                  className="text-sm text-court-chalk/70 underline hover:text-court-chalk"
+                  className="text-sm text-[var(--text-secondary)] underline hover:text-[var(--text-primary)]"
                 >
                   Play another
                 </button>
               )}
               <button
                 onClick={onBackToHome}
-                className="text-sm text-court-chalk/70 underline hover:text-court-chalk"
+                className="text-sm text-[var(--text-secondary)] underline hover:text-[var(--text-primary)]"
               >
                 Back to Home
               </button>

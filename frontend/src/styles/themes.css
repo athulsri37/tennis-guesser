@@ -1,0 +1,31 @@
+:root[data-theme="retro"] {
+  --bg-primary: #E8DFC8;
+  --bg-card: #FFFCF2;
+  --text-primary: #2B2118;
+  --text-secondary: rgba(43, 33, 24, 0.7);
+  --text-muted: rgba(43, 33, 24, 0.55);
+  --accent: #C9E265;
+  --accent-hover: #b8d24f;
+  --accent-alt: #B5602B;
+  --accent-alt-hover: #9c5225;
+  --on-accent: #2B2118;
+  --border: rgba(43, 33, 24, 0.25);
+  --font-heading: 'Archivo Black';
+  --font-body: 'Inter';
+}
+
+:root[data-theme="stadium"] {
+  --bg-primary: #0a0e14;
+  --bg-card: #12181f;
+  --text-primary: #e2e8f0;
+  --text-secondary: rgba(226, 232, 240, 0.7);
+  --text-muted: rgba(226, 232, 240, 0.5);
+  --accent: #39FF88;
+  --accent-hover: #2de077;
+  --accent-alt: #ff5470;
+  --accent-alt-hover: #e6415f;
+  --on-accent: #0a0e14;
+  --border: #1f2833;
+  --font-heading: 'Orbitron';
+  --font-body: 'Inter';
+}

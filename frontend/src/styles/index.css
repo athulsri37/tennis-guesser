@@ -3,5 +3,9 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body, 'Inter'), sans-serif;
+}
+
+.font-heading {
+  font-family: var(--font-heading, 'Bebas Neue'), sans-serif;
 }

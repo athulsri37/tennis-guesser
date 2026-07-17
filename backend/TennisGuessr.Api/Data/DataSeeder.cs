@@ -11,6 +11,12 @@ public static class DataSeeder
 {
     public static async Task SeedAsync(GameDbContext db)
     {
+        await SeedTennisAsync(db);
+        await SeedAppSettingsAsync(db);
+    }
+
+    private static async Task SeedTennisAsync(GameDbContext db)
+    {
         if (await db.Sports.AnyAsync(s => s.Slug == "tennis"))
             return; // already seeded
 
@@ -77,6 +83,15 @@ public static class DataSeeder
             });
         }
 
+        await db.SaveChangesAsync();
+    }
+
+    private static async Task SeedAppSettingsAsync(GameDbContext db)
+    {
+        if (await db.AppSettings.AnyAsync(s => s.Key == "ActiveTheme"))
+            return; // already seeded
+
+        db.AppSettings.Add(new AppSetting { Key = "ActiveTheme", Value = "retro" });
         await db.SaveChangesAsync();
     }
 }

@@ -1,20 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchPlayerPool, startPracticeGame, submitGuess, fetchCountryHint } from "../api/client";
 import { PlayerSummary, GuessResponse, Difficulty } from "../types";
 import PlayerSearch from "../components/PlayerSearch";
 import ClueGrid from "../components/ClueGrid";
 import ClueLegend from "../components/ClueLegend";
 import ShareResult from "../components/ShareResult";
+import { recordDailyResult, StreakData } from "../utils/dailyStreak";
 
 const MAX_GUESSES = 8;
 const HINT_AFTER_GUESS = 5;
 
 interface Props {
   mode: Difficulty;
+  sportSlug: string;
   onBackToHome: () => void;
 }
 
-export default function GameBoard({ mode, onBackToHome }: Props) {
+export default function GameBoard({ mode, sportSlug, onBackToHome }: Props) {
   const [players, setPlayers] = useState<PlayerSummary[]>([]);
   const [sessionId, setSessionId] = useState<string | undefined>(undefined);
   const [guesses, setGuesses] = useState<GuessResponse[]>([]);
@@ -26,6 +28,9 @@ export default function GameBoard({ mode, onBackToHome }: Props) {
   const [hintOffered, setHintOffered] = useState(false);
   const [hintDeclined, setHintDeclined] = useState(false);
   const [revealedCountry, setRevealedCountry] = useState<string | null>(null);
+
+  const [streak, setStreak] = useState<StreakData | null>(null);
+  const streakRecordedRef = useRef(false);
 
   useEffect(() => {
     fetchPlayerPool().then(setPlayers).catch(() => setError("Couldn't load player list."));
@@ -39,6 +44,8 @@ export default function GameBoard({ mode, onBackToHome }: Props) {
     setHintOffered(false);
     setHintDeclined(false);
     setRevealedCountry(null);
+    setStreak(null);
+    streakRecordedRef.current = false;
 
     if (mode !== "daily") {
       setLoading(true);
@@ -78,6 +85,15 @@ export default function GameBoard({ mode, onBackToHome }: Props) {
     }
     setHintOffered(true);
   }, [guesses, hintOffered, gameOver]);
+
+  // Update this sport's Daily Challenge streak exactly once per finished
+  // game. Guarded by a ref (not just state) so a re-render after gameOver
+  // is already true can't record the same result twice.
+  useEffect(() => {
+    if (mode !== "daily" || !gameOver || streakRecordedRef.current) return;
+    streakRecordedRef.current = true;
+    setStreak(recordDailyResult(sportSlug, won));
+  }, [mode, gameOver, won, sportSlug]);
 
   const handleGuess = async (player: PlayerSummary) => {
     if (gameOver) return;
@@ -180,6 +196,14 @@ export default function GameBoard({ mode, onBackToHome }: Props) {
             {guesses[guesses.length - 1].triviaBlurb && (
               <p className="text-[var(--text-muted)] text-xs italic mt-2 max-w-sm mx-auto">
                 {guesses[guesses.length - 1].triviaBlurb}
+              </p>
+            )}
+            {mode === "daily" && streak && (
+              <p className="text-[var(--text-primary)] text-sm font-semibold mt-2">
+                🔥 {streak.currentStreak} day streak
+                {streak.maxStreak > 0 && (
+                  <span className="text-[var(--text-muted)] font-normal"> · Best streak: {streak.maxStreak}</span>
+                )}
               </p>
             )}
             <ShareResult guesses={guesses} won={won} mode={mode} />

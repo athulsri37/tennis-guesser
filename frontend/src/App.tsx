@@ -50,7 +50,7 @@ export default function App() {
   }
 
   if (screen === "game" && sport && mode) {
-    return <GameBoard mode={mode} onBackToHome={backToSportHome} />;
+    return <GameBoard mode={mode} sportSlug={sport.slug} onBackToHome={backToSportHome} />;
   }
 
   return <HomeScreen onSelectSport={selectSport} />;
